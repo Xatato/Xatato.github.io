@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Application</title>
+<style>
+    /* CSS styles for the study application */
+    body {
+        font-family: Tahoma, sans-serif;
+        background-color: #232020;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    #quote {
+        font-family: Tahoma, sans-serif;
+        padding-top: 100px;
+        font-style: italic;
+        color: #666;
+        margin-top: auto; /* Centers the text vertically at the bottom */
+    }
+
+    .panel {
+        font-family: Tahoma, sans-serif;
+        border: 2px solid #ccc;
+        padding: 20px;
+        width: 1000px;
+        height: 500px;
+        text-align: center;
+        background-color: #ADADAD;
+        box-shadow: 0 0 30px 15px rgba(145, 227, 255, 0.5); /* Light blue box shadow */
+        border-radius: 10px; /* Rounded corners for the panel */
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    #topicSelect {
+        font-family: Tahoma, sans-serif;
+        display: block;
+        margin: 10px auto; /* Center the dropdown horizontally */
+        width: 70%; /* Adjust the width as needed */
+        max-width: 155px; /* Set a max-width to prevent it from becoming too wide */
+    }
+
+    #timersContainer {
+        display: flex;
+        flex-wrap: wrap; /* Wrap items to the next line when there's not enough space */
+        justify-content: center; /* Center items horizontally */
+        gap: 10px; /* Space between timers */
+    }
+
+    .timer {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        max-width: 150px;
+        box-shadow: 0 0 7px 2px rgba(145, 227, 255, 0.5); /* Light blue box shadow */
+        border-radius: 10px; /* Rounded corners for the panel */
+        border: 2px solid #ccc;
+    }
+
+    .timer h2 {
+        margin: 0;
+    }
+
+    .time {
+        font-family: Tahoma, sans-serif;
+        font-size: 24px;
+        margin: 10px 0;
+        display: block;
+    }
+</style>
+</head>
+<body>
+    <div class="panel">
+        <h1>Study Application</h1>
+        <label for="topicSelect">Select Class:</label>
+        <select id="topicSelect">
+            <option value="" disabled selected>Please select a class</option>
+            <option value="AP Calculus BC">AP Calculus BC</option>
+            <option value="AP Chemistry">AP Chemistry</option>
+            <option value="AP Physics">AP Physics</option>
+            <option value="AP Language">AP Language</option>
+            <option value="AP Computer Science">AP Computer Science</option>
+            <!-- Add more topic options as needed -->
+        </select>
+        <div id="timersContainer">
+            <!-- Timers will be dynamically added here -->
+        </div>
+        <div id="quote">"Your time is limited, so don't waste it living someone else's life." - Steve Jobs</div>
+    </div>
+    <script>
+        var quotes = [
+            "Wow! Great Job Studying!!!",
+            "At This Pace, You'll Be Ready In No Time!!!",
+            "Those AP Tests Are No Match For You ;)",
+        ];
+
+        // JavaScript code for the study application
+        let timers = {}; // Object to store timers for each topic
+
+        function startTimer(topic) {
+            if (!timers[topic]) {
+                timers[topic] = setInterval(() => {
+                    const timerElement = document.querySelector(`.timer[data-topic="${topic}"] .time`);
+                    if (timerElement) {
+                        const currentTime = parseInt(timerElement.dataset.time, 10) || 0;
+                        const newTime = currentTime + 1;
+                        timerElement.dataset.time = newTime;
+                        const hours = String(Math.floor(newTime / 3600)).padStart(2, '0');
+                        const minutes = String(Math.floor((newTime % 3600) / 60)).padStart(2, '0');
+                        const seconds = String(newTime % 60).padStart(2, '0');
+                        timerElement.textContent = `${hours}:${minutes}:${seconds}`;
+                    }
+                }, 1000); // Update every second
+            }
+        }
+
+        function stopTimer(topic) {
+            if (timers[topic]) {
+                clearInterval(timers[topic]);
+                delete timers[topic];
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const topicSelect = document.getElementById('topicSelect');
+            const timersContainer = document.getElementById('timersContainer');
+
+            // Event listener for topic selection
+            topicSelect.addEventListener('change', () => {
+                const selectedTopic = topicSelect.value;
+                const existingTimer = timersContainer.querySelector(`.timer[data-topic="${selectedTopic}"]`);
+
+                if (!existingTimer) {
+                    const newTimerElement = document.createElement('div');
+                    newTimerElement.classList.add('timer');
+                    newTimerElement.dataset.topic = selectedTopic;
+                    newTimerElement.innerHTML = `
+                        <h2>${selectedTopic}</h2>
+                        <span class="time" data-time="0">00:00:00</span>
+                    `;
+                    timersContainer.appendChild(newTimerElement);
+                }
+
+                // Start timer for the selected topic
+                startTimer(selectedTopic);
+
+                // Stop timers for other topics
+                Object.keys(timers).forEach(topic => {
+                    if (topic !== selectedTopic) {
+                        stopTimer(topic);
+                    }
+                });
+            });
+        });
+
+        function updateQuote() {
+            var quoteElement = document.getElementById('quote');
+            var randomIndex = Math.floor(Math.random() * quotes.length); // Generate a random index
+            quoteElement.textContent = quotes[randomIndex];
+        }
+
+        window.onload = updateQuote;
+    </script>
+</body>
+</html>

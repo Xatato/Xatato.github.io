@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #232020;
+    }
+
+    .panel {
+      background-color: #f2f2f2;
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 800px;
+      background-color: #adadad;
+      box-shadow: 0 0 30px 15px rgba(145, 227, 255, 0.5);
+    }
+
+    .resources-tab {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .button-link {
+      display: inline-block;
+      padding: 15px 30px;
+      margin: 10px;
+      background-color: #adadad;
+      color: #232020;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: 0 0 10px 5px rgba(145, 227, 255, 0.5);
+      text-decoration: none; /* Remove default underline */
+    }
+
+    .button-link:hover {
+      background-color: #7f7f7f;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1 class="resources-tab">Resources</h1>
+    <div class="buttons">
+      <a href="https://www.collegeboard.org/" class="button-link" target="_blank">College Board</a>
+      <a href="https://www.khanacademy.org/" class="button-link" target="_blank">Khan Academy</a>
+      <a href="https://www.youtube.com/@collegeboard" class="button-link" target="_blank">AP Review Youtube</a>
+      <a href="https://www.amazon.com/Test-Preparation-AP-Books/s?rh=n%3A5267710011%2Cp_n_feature_two_browse-bin%3A11553619011" class="button-link" target="_blank">AP Books</a>
+      <a href="https://apcentral.collegeboard.org/exam-administration-ordering-scores/exam-dates" class="button-link" target="_blank">AP Schedule</a>
+    </div>
+  </div>
+</body>
+</html>
